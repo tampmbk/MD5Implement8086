@@ -29,50 +29,34 @@ nhapdodaixau db "ban muon nhap bao nhieu ky tu",13,10,"$"
 MAIN PROC
     MOV AX,@DATA     ; HIEN THI LOI NHAC
     MOV DS,AX        ;          
-    lea dx,nhapdodaixau ; nhac nhap do dai xau
+    lea dx,nhacnhap ; nhac nhap do dai xau
     mov ah,09h
     int 21h
-    mov bl,0
-    mov bx,0
-    nhapdodai:
-        mov ah,01h
-        int 21h
+    mov cx,0         ; do dai xau   
+    LEA DX,XAU       ; LAY VI TRI CUA BO 
+    MOV DI,DX        ;      NHO DE LUU XAU
+    NHAPXAU:         ; NHAP 1
+        MOV AH,01H   ;      KY TU
+        INT 21H                  
         cmp al,13       ;nhan enter
-        je thoatnhap    ;     thi dung lai           
-        mov bh,al       ; luu so vua nhap 
-        sub bh,30h      ;     vao bh
-        mov al,bl       ; nhan so da nhap luc truoc
-        mov cl,10       ;     voi 10
-        mul cl
-        mov bl,al       ;     roi cong voi so vua nhap
-        add bl,bh       ; ket qua o bl
-    jmp nhapdodai       
-    thoatnhap:
-    mov cl,bl         ; so luong ky tu trong xau
-    mov ch,0
-    mov al,bl         ;nhan do dau cua xau
+        je thoatnhap    ;     thi dung lai
+        MOV [DI],AL  ; LUU KY TU VUA NHAP
+        INC DI       ;      VAO TRONG BO NHO
+        inc cx
+    jmp NHAPXAU      
+    thoatnhap: 
+    MOV [DI],80H     ; THEM BIT 1 VAO SAU XAU 
+    mov ax,cx         ;nhan do dau cua xau
     mov ah,0
     mov dl,8          ;         voi 8
     mul dl
     
     
-    lea dx,xau       ; luu bit dao nguoc vao trong xau
+    lea dx,xau       ; luu bit do dai
     mov xau+56,al
     mov xau+57,ah                                      
     
-    LEA DX,NHACNHAP  ;
-    MOV AH,09H       ;
-    INT 21H
-    ;MOV CX,16       ; XAU CO 16 KY TU
-    LEA DX,XAU       ; LAY VI TRI CUA BO 
-    MOV DI,DX        ;      NHO DE LUU XAU
-    NHAPXAU:         ; NHAP 1
-        MOV AH,01H   ;      KY TU
-        INT 21H
-        MOV [DI],AL  ; LUU KY TU VUA NHAP
-        INC DI       ;      VAO TRONG BO NHO
-    LOOP NHAPXAU
-    MOV [DI],80H     ; THEM BIT 1 VAO SAU XAU
+    
     
     ; TINH MD 5
     ; input chi co 1 block 512 byte
