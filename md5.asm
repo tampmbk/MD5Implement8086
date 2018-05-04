@@ -1,13 +1,17 @@
 .MODEL SMALL
-.STACK 100H
-.DATA 
+org 100H
+.DATA
+hello db "MD5 PHAM MINH TAM 201532398",13,10,"KSTN-CNTT-K60",13,10,'$'
+
+USART_CMD Equ 002h
+USART_DATA Equ 000h
 R DB 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20,4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21
 K DD d76aa478h,e8c7b756h,242070dbh,c1bdceeeh,f57c0fafh,4787c62ah,a8304613h,fd469501h,698098d8h,8b44f7afh,ffff5bb1h,895cd7beh,6b901122h,fd987193h,a679438eh,49b40821h,f61e2562h,c040b340h,265e5a51h,e9b6c7aah,d62f105dh,02441453h,d8a1e681h,e7d3fbc8h,21e1cde6h,c33707d6h,f4d50d87h,455a14edh,a9e3e905h,fcefa3f8h,676f02d9h,8d2a4c8ah,fffa3942h,8771f681h,6d9d6122h,fde5380ch,a4beea44h,4bdecfa9h,f6bb4b60h,bebfbc70h,289b7ec6h,eaa127fah,d4ef3085h,04881d05h,d9d4d039h,e6db99e5h,1fa27cf8h,c4ac5665h,f4292244h,432aff97h,ab9423a7h,fc93a039h,655b59c3h,8f0ccc92h,ffeff47dh,85845dd1h,6fa87e4fh,fe2ce6e0h,a3014314h,4e0811a1h,f7537e82h,bd3af235h,2ad7d2bbh,eb86d391h
 H0 DD 0X67452301
 H1 DD 0XEFCDAB89
 H2 DD 0X98BADCFE
 H3 DD 0X10325476
-NHACNHAP DB "NHAP VAO CHUOI:$"
+NHACNHAP DB 13,10,"NHAP VAO CHUOI:$"
 KQ DB 13,10,"MD5 LA:",13,10,"$"
 
 XAU DB 56 DUP (0),80h,0,0,0,0,0,0,0
@@ -23,13 +27,33 @@ TEMP DD 0
 
 MANG DB 100 DUP (?)
 count db 2
-nhapdodaixau db "ban muon nhap bao nhieu ky tu",13,10,"$"
-.CODE
 
+.CODE
+start:
 MAIN PROC
-    MOV AX,@DATA     ; HIEN THI LOI NHAC
-    MOV DS,AX 
-    ;!!!!!!!!!!!!!!!!!!!!
+    MOV AL,01111101b; //8E1 - /64 
+    OUT USART_CMD,AL;
+    MOV AL,00000111b;
+    OUT USART_CMD,AL;
+    
+    ; MO dau
+    mov bx,offset hello
+    ;;;;;;;;;;;;;;;;;;;;;
+    ;mov ah,09h
+    ;int 21h  
+    lapw0:               
+    
+  
+        in al, USART_CMD
+        test al, 1
+        JE lapw0
+        MOV AL,[bx]
+        add bx,1
+        cmp al,24h
+        JE hetw0
+        OUT USART_DATA,AL            
+    JMP lapw0
+    hetw0:
     loopmd5:
     ;@@@@@@@@@@@@@@@@@@@@@@@@@
     ; reset lai gia tri
@@ -59,16 +83,51 @@ MAIN PROC
     mov d,5476h
     mov [d+2],1032h
     
-    ;!!!!!!!!!!!!!!!!!!!!!        ;          
-    lea dx,nhacnhap ; nhac nhap do dai xau
-    mov ah,09h
-    int 21h
+    ;MOV AX,@DATA     ; HIEN THI LOI NHAC
+    ;MOV DS,AX        ;          
+    ;lea dx,nhacnhap ; nhac nhap do dai xau
+    ;####
+    mov bx,offset nhacnhap
+    ;;;;;;;;;;;;;;;;;;;;;
+    ;mov ah,09h
+    ;int 21h  
+    lapw1:               
+    
+  
+        in al, USART_CMD
+        test al, 1
+        JE lapw1
+        MOV AL,[bx]
+        add bx,1
+        cmp al,24h
+        JE hetw1
+        OUT USART_DATA,AL            
+    JMP lapw1
+    hetw1:
+    ;;;;;;;;;;;;;;;;;;;;;;
     mov cx,0         ; do dai xau   
     LEA DX,XAU       ; LAY VI TRI CUA BO 
     MOV DI,DX        ;      NHO DE LUU XAU
     NHAPXAU:         ; NHAP 1
-        MOV AH,01H   ;      KY TU
-        INT 21H                  
+        ;;;;;;;;;;;;;;;;
+        ;MOV AH,01H   ;      KY TU
+        ;INT 21H 
+        lapr1:
+        r1:                    ;doc ky tu luu vao al,bl
+            in al, USART_CMD
+            test al, 2
+            JE r1
+            in al, USART_DATA
+            shr al, 1
+            mov bl,al  
+        w1:                    ; ghi ky tu ra man hinh
+            in al, USART_CMD
+            test al, 1
+            JE w1
+            mov al, bl
+            out USART_DATA, al    
+        ;mov al,bl               ; ky tu luu o al
+        ;;;;;;;;;;;;;;;;;         
         cmp al,13       ;nhan enter
         je thoatnhap    ;     thi dung lai
         MOV [DI],AL  ; LUU KY TU VUA NHAP
@@ -348,11 +407,27 @@ MAIN PROC
     adc ax,bx
     mov h3+2,ax       ; h3 = h3+d
     ;
-    ;;;;;;;;
+    ;;;;;;;;j;;;;;;;;;; j
     ;hien thi gia tri hex
-    lea dx,kq
-    mov ah,09h
-    int 21h 
+    ;lea dx,kq
+    ;mov ah,09h
+    ;int 21h 
+    mov bx,offset kq
+    lapw2:               
+    
+  
+        in al, USART_CMD
+        test al, 1
+        JE lapw2
+        MOV AL,[bx]
+        add bx,1
+        cmp al,24h
+        JE hetw2
+        OUT USART_DATA,AL            
+    JMP lapw2
+    hetw2:
+    ;;;;;;;;;;;;;;;;;;;;;;;; 
+    ; in ket qua duoi dang hexa
     mov cl,16       ;divide by  
     mov ax, 0        
     mov bx,0
@@ -362,59 +437,71 @@ MAIN PROC
     mov ax, [h0+bx]    
     mov ah,0     
     mov dx,0    ; puting 0 in the high part of the divided number (DX:AX)
-    div cx 
-    again1:
+    div cx         ; chia cho 16
+    ;phan du luu o DX
+    ; phan thuong luu o AX
+    againa:    
+        cmp al,9
+        ja kytua
+        cmp al,9
+        jna soa 
+    againd:
       
         cmp dl, 9   
         ja kytud     ; neu dx >9 thi chuyen sang ky tu (A-F)
         cmp dl, 9
         jna sod      ; neu dx < 9 thi doi sang so
-    againa:    
-        cmp al,9
-        ja kytua
-        cmp al,9
-        jna soa
-    tiep:                   
-        push dx
-        jne againa
-    tiepa:                   
-        push ax
+    hiena:
+        ;;;;;;;;;;;;;
+        ;mov ah, 2
+        ;int 21h
+        w2:
+            mov ah,al
+            in al, USART_CMD
+            test al, 1
+            JE w2
+            MOV AL,ah
+            OUT USART_DATA,al
+        
+        ;;;;;;;;;;;;;;;;;;
          
-    again2:
-        pop dx
-        mov ah, 2
-        int 21h
-        dec count
-        cmp count, 0
-        jne again2  
-     
+        jmp againd
+       
+    hiend: 
+        ;;;;;;;;;;;;;;;
+
+        ;mov ah,2
+        ;int 21h 
+        ;mov al,dl
+        w3:
+            in al, USART_CMD
+            test al, 1
+            JE w3
+            MOV AL,dl
+            OUT USART_DATA,al
+        ;;;;;;;;;;;;;;;
     jmp thoat
-      
+    
     kytud:
         add dl, 37h
-        jmp tiep  
+        jmp hiend  
     sod:
         add dl, 30h
-        jmp tiep
+        jmp hiend
     kytua:
         add al, 37h
-        jmp tiepa  
+        jmp hiena  
     soa:
         add al, 30h
-        jmp tiepa    
-    
+        jmp hiena    
     thoat:
         add bx,1
         cmp bx,16
-        mov count,2
-        jne inkq
-     
-        ;mov ah, 4ch
-        ;int 21h
-    jmp loopmd5 
-    RET
+        jne inkq 
+        
+    jmp loopmd5
     
 MAIN ENDP
 
 
-END MAIN
+END start  
