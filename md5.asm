@@ -1,7 +1,7 @@
 .MODEL SMALL
 org 100H
 .DATA
-hello db "MD5 PHAM MINH TAM 201532398",13,10,"KSTN-CNTT-K60",13,10,'$'
+hello db "MD5 PHAM MINH TAM 20153298",13,10,"KSTN-CNTT-K60",13,10,'$'
 
 USART_CMD Equ 002h
 USART_DATA Equ 000h
@@ -19,8 +19,8 @@ A DD 0X67452301
 B DD 0XEFCDAB89
 C DD 0X98BADCFE
 D DD 0X10325476
-tt1 dw 0
-tt2 dw 0
+tt1 dw 0         ; bien trung gian
+tt2 dw 0         ;
 F DD 0
 G DD 0
 TEMP DD 0
@@ -213,7 +213,7 @@ MAIN PROC
             mov f+2,ax
             mov ax,cx
             neg ax
-            add ax,64   ;i
+            add ax,64   ;i      ;=64-i
             mov bl,5
             mul bl       ;i*5
             add ax,1    ;5*i+1
@@ -238,7 +238,7 @@ MAIN PROC
             mov f+2,ax
             mov ax,cx
             neg ax
-            add ax,64   ;i
+            add ax,64   ;i       ; = 64-i
             mov bl,3
             mul bl       ;i*3
             add ax,5    ;3*i+5
@@ -344,14 +344,14 @@ MAIN PROC
         mov bx,ax
         mov al,r+bx         ;r[i]
           ; so lan dich trai 
-        mov bx,tt1
-        mov dx,tt2
-        dichtrai:
+        mov bx,tt1         ; bit thap
+        mov dx,tt2         ; bit cao
+        dichtrai:          ;   (a+f+k[i]+w[g]) duoc luu trong dx bx
             clc
-            rcl bx,1
-            rcl dx,1
-            rcr bx,1
-            rol bx,1 
+            rcl bx,1       ;quay trai voi co nho
+            rcl dx,1       ;
+            rcr bx,1       ; quay phai voi co nho
+            rol bx,1       ; quay trai            ;;dich 1 lan
             sub al,1
             cmp al,0
             

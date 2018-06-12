@@ -1,0 +1,571 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+md5.com -- emu8086 assembler version: 4.08  
+ 
+[ 5/13/2018  --  7:40:19 AM ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       .MODEL SMALL
+[   2]        :                                       org 100H
+[   3]    0100: E9 5F 02                              .DATA
+[   4]    0103: 4D 44 35 20 50 48 41 4D 20 4D 49 4E   hello db "MD5 PHAM MINH TAM 20153298",13,10,"KSTN-CNTT-K60",13,10,'$'
+                48 20 54 41 4D 20 32 30 31 35 33 32 
+                39 38 0D 0A 4B 53 54 4E 2D 43 4E 54 
+                54 2D 4B 36 30 0D 0A 24             
+[   5]        :                                       
+[   6]        :                                       USART_CMD Equ 002h
+[   7]        :                                       USART_DATA Equ 000h
+[   8]    012F: 07 0C 11 16 07 0C 11 16 07 0C 11 16   R DB 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20,4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21
+                07 0C 11 16 05 09 0E 14 05 09 0E 14 
+                05 09 0E 14 05 09 0E 14 04 0B 10 17 
+                04 0B 10 17 04 0B 10 17 04 0B 10 17 
+                06 0A 0F 15 06 0A 0F 15 06 0A 0F 15 
+                06 0A 0F 15                         
+[   9]    016F: 78 A4 6A D7 56 B7 C7 E8 DB 70 20 24   K DD d76aa478h,e8c7b756h,242070dbh,c1bdceeeh,f57c0fafh,4787c62ah,a8304613h,fd469501h,698098d8h,8b44f7afh,ffff5bb1h,895cd7beh,6b901122h,fd987193h,a679438eh,49b40821h,f61e2562h,c040b340h,265e5a51h,e9b6c7aah,d62f105dh,02441453h,d8a1e681h,e7d3fbc8h,21e1cde6h,c33707d6h,f4d50d87h,455a14edh,a9e3e905h,fcefa3f8h,676f02d9h,8d2a4c8ah,fffa3942h,8771f681h,6d9d6122h,fde5380ch,a4beea44h,4bdecfa9h,f6bb4b60h,bebfbc70h,289b7ec6h,eaa127fah,d4ef3085h,04881d05h,d9d4d039h,e6db99e5h,1fa27cf8h,c4ac5665h,f4292244h,432aff97h,ab9423a7h,fc93a039h,655b59c3h,8f0ccc92h,ffeff47dh,85845dd1h,6fa87e4fh,fe2ce6e0h,a3014314h,4e0811a1h,f7537e82h,bd3af235h,2ad7d2bbh,eb86d391h
+                EE CE BD C1 AF 0F 7C F5 2A C6 87 47 
+                13 46 30 A8 01 95 46 FD D8 98 80 69 
+                AF F7 44 8B B1 5B FF FF BE D7 5C 89 
+                22 11 90 6B 93 71 98 FD 8E 43 79 A6 
+                21 08 B4 49 62 25 1E F6 40 B3 40 C0 
+                51 5A 5E 26 AA C7 B6 E9 5D 10 2F D6 
+                53 14 44 02 81 E6 A1 D8 C8 FB D3 E7 
+                E6 CD E1 21 D6 07 37 C3 87 0D D5 F4 
+                ED 14 5A 45 05 E9 E3 A9 F8 A3 EF FC 
+                D9 02 6F 67 8A 4C 2A 8D 42 39 FA FF 
+                81 F6 71 87 22 61 9D 6D 0C 38 E5 FD 
+                44 EA BE A4 A9 CF DE 4B 60 4B BB F6 
+                70 BC BF BE C6 7E 9B 28 FA 27 A1 EA 
+                85 30 EF D4 05 1D 88 04 39 D0 D4 D9 
+                E5 99 DB E6 F8 7C A2 1F 65 56 AC C4 
+                44 22 29 F4 97 FF 2A 43 A7 23 94 AB 
+                39 A0 93 FC C3 59 5B 65 92 CC 0C 8F 
+                7D F4 EF FF D1 5D 84 85 4F 7E A8 6F 
+                E0 E6 2C FE 14 43 01 A3 A1 11 08 4E 
+                82 7E 53 F7 35 F2 3A BD BB D2 D7 2A 
+                91 D3 86 EB                         
+[  10]    026F: 01 23 45 67                           H0 DD 0X67452301
+[  11]    0273: 89 AB CD EF                           H1 DD 0XEFCDAB89
+[  12]    0277: FE DC BA 98                           H2 DD 0X98BADCFE
+[  13]    027B: 76 54 32 10                           H3 DD 0X10325476
+[  14]    027F: 0D 0A 4E 48 41 50 20 56 41 4F 20 43   NHACNHAP DB 13,10,"NHAP VAO CHUOI:$"
+                48 55 4F 49 3A 24                   
+[  15]    0291: 0D 0A 4D 44 35 20 4C 41 3A 0D 0A 24   KQ DB 13,10,"MD5 LA:",13,10,"$"
+                                                    
+[  16]        :                                       
+[  17]    029D: 00 00 00 00 00 00 00 00 00 00 00 00   XAU DB 56 DUP (0),80h,0,0,0,0,0,0,0
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 80 00 00 00 
+                00 00 00 00                         
+[  18]    02DD: 01 23 45 67                           A DD 0X67452301
+[  19]    02E1: 89 AB CD EF                           B DD 0XEFCDAB89
+[  20]    02E5: FE DC BA 98                           C DD 0X98BADCFE
+[  21]    02E9: 76 54 32 10                           D DD 0X10325476
+[  22]    02ED: 00 00                                 tt1 dw 0
+[  23]    02EF: 00 00                                 tt2 dw 0
+[  24]    02F1: 00 00 00 00                           F DD 0
+[  25]    02F5: 00 00 00 00                           G DD 0
+[  26]    02F9: 00 00 00 00                           TEMP DD 0
+[  27]        :                                       
+[  28]    02FD: 00 00 00 00 00 00 00 00 00 00 00 00   MANG DB 100 DUP (?)
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00                         
+[  29]    0361: 02                                    count db 2
+[  30]        :                                       
+[  31]    0362:                                       .CODE
+[  32]    0362:                                       start:
+[  33]    0362:                                       MAIN PROC
+[  34]    0362: B0 7D                                 MOV AL,01111101b; //8E1 - /64
+[  35]    0364: E6 02                                 OUT USART_CMD,AL;
+[  36]    0366: B0 07                                 MOV AL,00000111b;
+[  37]    0368: E6 02                                 OUT USART_CMD,AL;
+[  38]        :                                       
+[  39]        :                                       ; MO dau
+[  40]    036A: BB 03 01                              mov bx,offset hello
+[  41]        :                                       ;;;;;;;;;;;;;;;;;;;;;
+[  42]        :                                       ;mov ah,09h
+[  43]        :                                       ;int 21h
+[  44]    036D:                                       lapw0:
+[  45]        :                                       
+[  46]        :                                       
+[  47]    036D: E4 02                                 in al, USART_CMD
+[  48]    036F: A8 01                                 test al, 1
+[  49]    0371: 74 FA                                 JE lapw0
+[  50]    0373: 8A 07                                 MOV AL,[bx]
+[  51]    0375: 83 C3 01                              add bx,1
+[  52]    0378: 3C 24                                 cmp al,24h
+[  53]    037A: 74 04                                 JE hetw0
+[  54]    037C: E6 00                                 OUT USART_DATA,AL
+[  55]    037E: EB ED                                 JMP lapw0
+[  56]    0380:                                       hetw0:
+[  57]    0380:                                       loopmd5:
+[  58]        :                                       ;@@@@@@@@@@@@@@@@@@@@@@@@@
+[  59]        :                                       ; reset lai gia tri
+[  60]    0380: B1 32                                 mov cl,50
+[  61]    0382: B5 00                                 mov ch,0
+[  62]    0384:                                       reset:
+[  63]    0384: 8B F9                                 mov di,cx
+[  64]    0386: C6 85 9D 02 00                        mov [di+xau],0
+[  65]    038B: E2 F7                                 loop reset
+[  66]    038D: C7 06 6F 02 01 23                     mov h0,2301h
+[  67]    0393: C7 06 71 02 45 67                     mov [h0+2],6745h
+[  68]    0399: C7 06 DD 02 01 23                     mov a,2301h
+[  69]    039F: C7 06 DF 02 45 67                     mov [a+2],6745h
+[  70]        :                                       ;;
+[  71]    03A5: C7 06 73 02 89 AB                     mov h1 , 0xAB89h
+[  72]    03AB: C7 06 75 02 CD EF                     mov [h1+2],0xefcdh
+[  73]    03B1: C7 06 E1 02 89 AB                     mov b,0xab89h
+[  74]    03B7: C7 06 E3 02 CD EF                     mov [b+2],0xefcdh
+[  75]        :                                       ;;
+[  76]    03BD: C7 06 77 02 FE DC                     mov h2,0xdcfeh
+[  77]    03C3: C7 06 79 02 BA 98                     mov [h2+2],98bah
+[  78]    03C9: C7 06 E5 02 FE DC                     mov c,0xdcfeh
+[  79]    03CF: C7 06 E7 02 BA 98                     mov [c+2],98bah
+[  80]        :                                       ;;
+[  81]    03D5: C7 06 7B 02 76 54                     mov h3,5476h
+[  82]    03DB: C7 06 7D 02 32 10                     mov [h3+2],1032h
+[  83]    03E1: C7 06 E9 02 76 54                     mov d,5476h
+[  84]    03E7: C7 06 EB 02 32 10                     mov [d+2],1032h
+[  85]        :                                       
+[  86]        :                                       ;MOV AX,@DATA     ; HIEN THI LOI NHAC
+[  87]        :                                       ;MOV DS,AX        ;
+[  88]        :                                       ;lea dx,nhacnhap ; nhac nhap do dai xau
+[  89]        :                                       ;####
+[  90]    03ED: BB 7F 02                              mov bx,offset nhacnhap
+[  91]        :                                       ;;;;;;;;;;;;;;;;;;;;;
+[  92]        :                                       ;mov ah,09h
+[  93]        :                                       ;int 21h
+[  94]    03F0:                                       lapw1:
+[  95]        :                                       
+[  96]        :                                       
+[  97]    03F0: E4 02                                 in al, USART_CMD
+[  98]    03F2: A8 01                                 test al, 1
+[  99]    03F4: 74 FA                                 JE lapw1
+[ 100]    03F6: 8A 07                                 MOV AL,[bx]
+[ 101]    03F8: 83 C3 01                              add bx,1
+[ 102]    03FB: 3C 24                                 cmp al,24h
+[ 103]    03FD: 74 04                                 JE hetw1
+[ 104]    03FF: E6 00                                 OUT USART_DATA,AL
+[ 105]    0401: EB ED                                 JMP lapw1
+[ 106]    0403:                                       hetw1:
+[ 107]        :                                       ;;;;;;;;;;;;;;;;;;;;;;
+[ 108]    0403: B9 00 00                              mov cx,0         ; do dai xau
+[ 109]    0406: BA 9D 02                              LEA DX,XAU       ; LAY VI TRI CUA BO
+[ 110]    0409: 8B FA                                 MOV DI,DX        ;      NHO DE LUU XAU
+[ 111]    040B:                                       NHAPXAU:         ; NHAP 1
+[ 112]        :                                       ;;;;;;;;;;;;;;;;
+[ 113]        :                                       ;MOV AH,01H   ;      KY TU
+[ 114]        :                                       ;INT 21H
+[ 115]    040B:                                       lapr1:
+[ 116]    040B:                                       r1:                    ;doc ky tu luu vao al,bl
+[ 117]    040B: E4 02                                 in al, USART_CMD
+[ 118]    040D: A8 02                                 test al, 2
+[ 119]    040F: 74 FA                                 JE r1
+[ 120]    0411: E4 00                                 in al, USART_DATA
+[ 121]    0413: D0 E8                                 shr al, 1
+[ 122]    0415: 8A D8                                 mov bl,al
+[ 123]    0417:                                       w1:                    ; ghi ky tu ra man hinh
+[ 124]    0417: E4 02                                 in al, USART_CMD
+[ 125]    0419: A8 01                                 test al, 1
+[ 126]    041B: 74 FA                                 JE w1
+[ 127]    041D: 8A C3                                 mov al, bl
+[ 128]    041F: E6 00                                 out USART_DATA, al
+[ 129]        :                                       ;mov al,bl               ; ky tu luu o al
+[ 130]        :                                       ;;;;;;;;;;;;;;;;;
+[ 131]    0421: 3C 0D                                 cmp al,13       ;nhan enter
+[ 132]    0423: 74 06                                 je thoatnhap    ;     thi dung lai
+[ 133]    0425: 88 05                                 MOV [DI],AL  ; LUU KY TU VUA NHAP
+[ 134]    0427: 47                                    INC DI       ;      VAO TRONG BO NHO
+[ 135]    0428: 41                                    inc cx
+[ 136]    0429: EB E0                                 jmp NHAPXAU
+[ 137]    042B:                                       thoatnhap:
+[ 138]    042B: C6 05 80                              MOV [DI],80H     ; THEM BIT 1 VAO SAU XAU
+[ 139]    042E: 8B C1                                 mov ax,cx         ;nhan do dau cua xau
+[ 140]    0430: B4 00                                 mov ah,0
+[ 141]    0432: B2 08                                 mov dl,8          ;         voi 8
+[ 142]    0434: F6 E2                                 mul dl
+[ 143]        :                                       
+[ 144]        :                                       
+[ 145]    0436: BA 9D 02                              lea dx,xau       ; luu bit do dai
+[ 146]    0439: A2 D5 02                              mov xau+56,al
+[ 147]    043C: 88 26 D6 02                           mov xau+57,ah
+[ 148]        :                                       
+[ 149]        :                                       
+[ 150]        :                                       
+[ 151]        :                                       ; TINH MD 5
+[ 152]        :                                       ; input chi co 1 block 512 byte
+[ 153]    0440: B9 40 00                              MOV CX,64        ;LAP 64 LAN
+[ 154]    0443:                                       md5:
+[ 155]    0443: 83 F9 30                              cmp cx,48
+[ 156]    0446: 77 15                                 ja hamf
+[ 157]    0448: 83 F9 20                              cmp cx,32
+[ 158]    044B: 77 5D                                 ja hamg
+[ 159]    044D: 83 F9 10                              cmp cx,16
+[ 160]    0450: 76 03 E9 B0 00                        ja hamh
+[ 161]    0455: 83 F9 00                              cmp cx,0
+[ 162]    0458: 76 03 E9 E7 00                        ja hamt
+[ 163]    045D:                                       hamf:
+[ 164]    045D: A1 E1 02                              mov ax,b    ;
+[ 165]    0460: 8B 1E E5 02                           mov bx,c    ;
+[ 166]    0464: 23 C3                                 and ax,bx   ; b_&c_
+[ 167]    0466: A3 ED 02                              mov tt1,ax
+[ 168]    0469: A1 E1 02                              mov ax,b
+[ 169]    046C: 8B 1E E9 02                           mov bx,d
+[ 170]    0470: F7 D0                                 not ax
+[ 171]    0472: 23 C3                                 and ax,bx   ;~b_&d_
+[ 172]    0474: 8B 1E ED 02                           mov bx,tt1
+[ 173]    0478: 0B C3                                 or ax,bx    ;(b_&c_)|(~b_&d_)
+[ 174]    047A: A3 F1 02                              mov f,ax
+[ 175]    047D: A1 E3 02                              mov ax,b+2
+[ 176]    0480: 8B 1E E7 02                           mov bx,c+2
+[ 177]    0484: 23 C3                                 and ax,bx   ; b^&c^
+[ 178]    0486: A3 ED 02                              mov tt1,ax
+[ 179]    0489: A1 E3 02                              mov ax,b+2
+[ 180]    048C: 8B 1E EB 02                           mov bx,d+2
+[ 181]    0490: F7 D0                                 not ax
+[ 182]    0492: 23 C3                                 and ax,bx   ;~b^&d^
+[ 183]    0494: 8B 1E ED 02                           mov bx,tt1
+[ 184]    0498: 0B C3                                 or ax,bx    ;(b^&c^)|(~b^&d^)
+[ 185]    049A: A3 F3 02                              mov f+2,ax
+[ 186]    049D: 8B C1                                 mov ax,cx
+[ 187]    049F: F7 D8                                 neg ax
+[ 188]    04A1: 05 40 00                              add ax,64
+[ 189]    04A4: A3 F5 02                              mov g,ax
+[ 190]    04A7: E9 D8 00                              jmp md5tiep
+[ 191]    04AA:                                       hamg:
+[ 192]    04AA: A1 E9 02                              mov ax,d    ;
+[ 193]    04AD: 8B 1E E1 02                           mov bx,b    ;
+[ 194]    04B1: 23 C3                                 and ax,bx   ; d_&b_
+[ 195]    04B3: A3 ED 02                              mov tt1,ax
+[ 196]    04B6: A1 E9 02                              mov ax,d
+[ 197]    04B9: 8B 1E E5 02                           mov bx,c
+[ 198]    04BD: F7 D0                                 not ax
+[ 199]    04BF: 23 C3                                 and ax,bx   ;~d_&c_
+[ 200]    04C1: 8B 1E ED 02                           mov bx,tt1
+[ 201]    04C5: 0B C3                                 or ax,bx    ;(d_&b_)|(~d_&c_)
+[ 202]    04C7: A3 F1 02                              mov f,ax
+[ 203]    04CA: A1 EB 02                              mov ax,d+2
+[ 204]    04CD: 8B 1E E3 02                           mov bx,b+2
+[ 205]    04D1: 23 C3                                 and ax,bx   ; d^&b^
+[ 206]    04D3: A3 ED 02                              mov tt1,ax
+[ 207]    04D6: A1 EB 02                              mov ax,d+2
+[ 208]    04D9: 8B 1E E7 02                           mov bx,c+2
+[ 209]    04DD: F7 D0                                 not ax
+[ 210]    04DF: 23 C3                                 and ax,bx   ;~d^&c^
+[ 211]    04E1: 8B 1E ED 02                           mov bx,tt1
+[ 212]    04E5: 0B C3                                 or ax,bx    ;(d^&b^)|(~d^&c^)
+[ 213]    04E7: A3 F3 02                              mov f+2,ax
+[ 214]    04EA: 8B C1                                 mov ax,cx
+[ 215]    04EC: F7 D8                                 neg ax
+[ 216]    04EE: 05 40 00                              add ax,64   ;i
+[ 217]    04F1: B3 05                                 mov bl,5
+[ 218]    04F3: F6 E3                                 mul bl       ;i*5
+[ 219]    04F5: 05 01 00                              add ax,1    ;5*i+1
+[ 220]    04F8: B2 10                                 mov dl,16
+[ 221]    04FA: F6 F2                                 div dl      ;(5*i+1)%16
+[ 222]    04FC: 8A C4                                 mov al,ah
+[ 223]    04FE: B4 00                                 mov ah,0
+[ 224]    0500: A3 F5 02                              mov g,ax
+[ 225]    0503: EB 7D                                 jmp md5tiep
+[ 226]    0505:                                       hamh:
+[ 227]    0505: A1 E1 02                              mov ax,b    ;
+[ 228]    0508: 8B 1E E5 02                           mov bx,c    ;
+[ 229]    050C: 33 C3                                 xor ax,bx   ; b_(+)c_
+[ 230]    050E: 8B 1E E9 02                           mov bx,d
+[ 231]    0512: 33 C3                                 xor ax,bx   ;b_(+)c_(+)d_
+[ 232]    0514: A3 F1 02                              mov f,ax
+[ 233]    0517: A1 E3 02                              mov ax,b+2
+[ 234]    051A: 8B 1E E7 02                           mov bx,c+2
+[ 235]    051E: 33 C3                                 xor ax,bx   ; b^(+)c^
+[ 236]    0520: 8B 1E EB 02                           mov bx,d+2
+[ 237]    0524: 33 C3                                 xor ax,bx   ;b(+)&c^(+)d^
+[ 238]    0526: A3 F3 02                              mov f+2,ax
+[ 239]    0529: 8B C1                                 mov ax,cx
+[ 240]    052B: F7 D8                                 neg ax
+[ 241]    052D: 05 40 00                              add ax,64   ;i
+[ 242]    0530: B3 03                                 mov bl,3
+[ 243]    0532: F6 E3                                 mul bl       ;i*3
+[ 244]    0534: 05 05 00                              add ax,5    ;3*i+5
+[ 245]    0537: B2 10                                 mov dl,16
+[ 246]    0539: F6 F2                                 div dl      ;(3*i+5)%16
+[ 247]    053B: 8A C4                                 mov al,ah
+[ 248]    053D: B4 00                                 mov ah,0
+[ 249]    053F: A3 F5 02                              mov g,ax
+[ 250]    0542: EB 3E                                 jmp md5tiep
+[ 251]    0544:                                       hamt:
+[ 252]    0544: A1 E1 02                              mov ax,b    ;
+[ 253]    0547: 8B 1E E9 02                           mov bx,d    ;
+[ 254]    054B: F7 D3                                 not bx
+[ 255]    054D: 0B C3                                 or ax,bx    ; b_|~d_
+[ 256]    054F: 8B 1E E5 02                           mov bx,c
+[ 257]    0553: 33 C3                                 xor ax,bx   ;c_(+)(b_|~d_)
+[ 258]    0555: A3 F1 02                              mov f,ax
+[ 259]    0558: A1 E3 02                              mov ax,b+2
+[ 260]    055B: 8B 1E EB 02                           mov bx,d+2
+[ 261]    055F: F7 D3                                 not bx
+[ 262]    0561: 0B C3                                 or ax,bx    ; b^|~d^
+[ 263]    0563: 8B 1E E7 02                           mov bx,c+2
+[ 264]    0567: 33 C3                                 xor ax,bx   ;c^(+)(b^|~d^)
+[ 265]    0569: A3 F3 02                              mov f+2,ax
+[ 266]    056C: 8B C1                                 mov ax,cx
+[ 267]    056E: F7 D8                                 neg ax
+[ 268]    0570: 05 40 00                              add ax,64   ;i
+[ 269]    0573: B2 07                                 mov dl,7
+[ 270]    0575: F6 E2                                 mul dl       ;7*i
+[ 271]    0577: B2 10                                 mov dl,16
+[ 272]    0579: F6 F2                                 div dl      ;(7*i)%16
+[ 273]    057B: 8A C4                                 mov al,ah
+[ 274]    057D: B4 00                                 mov ah,0
+[ 275]    057F: A3 F5 02                              mov g,ax
+[ 276]    0582:                                       md5tiep:
+[ 277]    0582: A1 E9 02                              mov ax,d        ;
+[ 278]    0585: A3 F9 02                              mov temp,ax     ;
+[ 279]    0588: A1 EB 02                              mov ax,d+2      ;
+[ 280]    058B: A3 FB 02                              mov temp+2,ax   ;temp = d
+[ 281]    058E: A1 E5 02                              mov ax,c
+[ 282]    0591: A3 E9 02                              mov d,ax
+[ 283]    0594: A1 E7 02                              mov ax,c+2
+[ 284]    0597: A3 EB 02                              mov d+2,ax      ; d = c
+[ 285]    059A: A1 E1 02                              mov ax,b
+[ 286]    059D: A3 E5 02                              mov c,ax
+[ 287]    05A0: A1 E3 02                              mov ax,b+2
+[ 288]    05A3: A3 E7 02                              mov c+2,ax      ; c = b
+[ 289]        :                                       
+[ 290]        :                                       
+[ 291]    05A6: A1 DD 02                              mov ax, word ptr a
+[ 292]    05A9: 8B 1E F1 02                           mov bx, word ptr f
+[ 293]    05AD: 03 C3                                 add ax,bx
+[ 294]    05AF: A3 ED 02                              mov word ptr tt1,ax
+[ 295]    05B2: A1 DF 02                              mov ax, word ptr a+2
+[ 296]    05B5: 8B 1E F3 02                           mov bx, word ptr f+2
+[ 297]    05B9: 13 C3                                 adc ax,bx
+[ 298]    05BB: A3 EF 02                              mov word ptr tt2,ax  ; a+f
+[ 299]        :                                       
+[ 300]    05BE: 8B C1                                 mov ax,cx
+[ 301]    05C0: F7 D8                                 neg ax
+[ 302]    05C2: 05 40 00                              add ax,64           ;i
+[ 303]    05C5: B2 04                                 mov dl,4
+[ 304]    05C7: F6 E2                                 mul dl
+[ 305]    05C9: 8B D8                                 mov bx,ax
+[ 306]    05CB: 8B 87 6F 01                           mov ax,[bx+K]         ;k[i]
+[ 307]        :                                       ;mov ah,[bx+K+1]       ;k[i]
+[ 308]    05CF: 8B 16 ED 02                           mov dx,tt1
+[ 309]    05D3: 03 C2                                 add ax,dx
+[ 310]    05D5: A3 ED 02                              mov tt1,ax
+[ 311]    05D8: 8B 87 71 01                           mov ax,[k+bx+2]      ;k[i]
+[ 312]        :                                       ;mov ah,[k+bx+3]      ;k[i]
+[ 313]    05DC: 8B 16 EF 02                           mov dx,tt2
+[ 314]    05E0: 13 C2                                 adc ax,dx
+[ 315]    05E2: A3 EF 02                              mov tt2,ax          ; a+f+k[i]
+[ 316]        :                                       
+[ 317]    05E5: A1 F5 02                              mov ax,g
+[ 318]    05E8: B2 04                                 mov dl,4
+[ 319]    05EA: F6 E2                                 mul dl
+[ 320]    05EC: 8B D8                                 mov bx,ax
+[ 321]    05EE: 8A 87 9D 02                           mov al,[xau+bx]       ;w[g]
+[ 322]    05F2: 8A A7 9E 02                           mov ah,[xau+bx+1]     ;w[g]
+[ 323]    05F6: 8B 16 ED 02                           mov dx,tt1
+[ 324]    05FA: 03 C2                                 add ax,dx
+[ 325]    05FC: A3 ED 02                              mov tt1,ax
+[ 326]    05FF: 8A 87 9F 02                           mov al,[xau+bx+2]     ;w
+[ 327]    0603: 8A A7 A0 02                           mov ah,[xau+bx+3]     ;w
+[ 328]    0607: 8B 16 EF 02                           mov dx,tt2
+[ 329]    060B: 13 C2                                 adc ax,dx
+[ 330]    060D: A3 EF 02                              mov tt2,ax          ; a+f+k[i]+w[g]
+[ 331]        :                                       
+[ 332]        :                                       ;mov ax,b
+[ 333]        :                                       ;mov bx,tt1
+[ 334]        :                                       ;add ax,bx
+[ 335]        :                                       ;mov b,ax
+[ 336]        :                                       ;mov ax,b+2
+[ 337]        :                                       ;mov bx,tt2
+[ 338]        :                                       ;adc ax,bx
+[ 339]        :                                       ;mov b+2,ax        ;b+?? a+f+k[i]+w[g]
+[ 340]        :                                       
+[ 341]    0610: 8B C1                                 mov ax,cx
+[ 342]    0612: F7 D8                                 neg ax
+[ 343]    0614: 05 40 00                              add ax,64           ;i
+[ 344]    0617: 8B D8                                 mov bx,ax
+[ 345]    0619: 8A 87 2F 01                           mov al,r+bx         ;r[i]
+[ 346]        :                                       ; so lan dich trai
+[ 347]    061D: 8B 1E ED 02                           mov bx,tt1
+[ 348]    0621: 8B 16 EF 02                           mov dx,tt2
+[ 349]    0625:                                       dichtrai:
+[ 350]    0625: F8                                    clc
+[ 351]    0626: D1 D3                                 rcl bx,1
+[ 352]    0628: D1 D2                                 rcl dx,1
+[ 353]    062A: D1 DB                                 rcr bx,1
+[ 354]    062C: D1 C3                                 rol bx,1
+[ 355]    062E: 2C 01                                 sub al,1
+[ 356]    0630: 3C 00                                 cmp al,0
+[ 357]        :                                       
+[ 358]    0632: 75 F1                                 jne dichtrai ;LEFTROTATE((a+f+k[i]+w[g]),r[i])
+[ 359]        :                                       
+[ 360]        :                                       
+[ 361]    0634: 89 1E ED 02                           mov tt1,bx
+[ 362]    0638: 89 16 EF 02                           mov tt2,dx
+[ 363]    063C: 8B 16 E5 02                           mov dx,c
+[ 364]    0640: 03 DA                                 add bx,dx
+[ 365]    0642: 89 1E E1 02                           mov b,bx
+[ 366]    0646: 8B 1E EF 02                           mov bx,tt2
+[ 367]    064A: 8B 16 E7 02                           mov dx,c+2
+[ 368]    064E: 13 DA                                 adc bx,dx
+[ 369]    0650: 89 1E E3 02                           mov b+2,bx      ;b+LEFTROTATE((a+f+k[i]+w[g]),r[i])
+[ 370]    0654: A1 F9 02                              mov ax,temp
+[ 371]    0657: A3 DD 02                              mov a,ax
+[ 372]    065A: A1 FB 02                              mov ax,temp+2
+[ 373]    065D: A3 DF 02                              mov a+2,ax      ; a = temp
+[ 374]        :                                       
+[ 375]    0660: 49 E3 03 E9 DD FD                     loop md5
+[ 376]        :                                       
+[ 377]    0666: A1 6F 02                              mov ax,h0
+[ 378]    0669: 8B 1E DD 02                           mov bx,a
+[ 379]    066D: 03 C3                                 add ax,bx
+[ 380]    066F: A3 6F 02                              mov h0,ax
+[ 381]    0672: A1 71 02                              mov ax,h0+2
+[ 382]    0675: 8B 1E DF 02                           mov bx,a+2
+[ 383]    0679: 13 C3                                 adc ax,bx
+[ 384]    067B: A3 71 02                              mov h0+2,ax       ; h0 = h0+a
+[ 385]    067E: A1 73 02                              mov ax,h1
+[ 386]    0681: 8B 1E E1 02                           mov bx,b
+[ 387]    0685: 03 C3                                 add ax,bx
+[ 388]    0687: A3 73 02                              mov h1,ax
+[ 389]    068A: A1 75 02                              mov ax,h1+2
+[ 390]    068D: 8B 1E E3 02                           mov bx,b+2
+[ 391]    0691: 13 C3                                 adc ax,bx
+[ 392]    0693: A3 75 02                              mov h1+2,ax       ; h1 = h1+b
+[ 393]    0696: A1 77 02                              mov ax,h2
+[ 394]    0699: 8B 1E E5 02                           mov bx,c
+[ 395]    069D: 03 C3                                 add ax,bx
+[ 396]    069F: A3 77 02                              mov h2,ax
+[ 397]    06A2: A1 79 02                              mov ax,h2+2
+[ 398]    06A5: 8B 1E E7 02                           mov bx,c+2
+[ 399]    06A9: 13 C3                                 adc ax,bx
+[ 400]    06AB: A3 79 02                              mov h2+2,ax       ; h2 = h2+c
+[ 401]    06AE: A1 7B 02                              mov ax,h3
+[ 402]    06B1: 8B 1E E9 02                           mov bx,d
+[ 403]    06B5: 03 C3                                 add ax,bx
+[ 404]    06B7: A3 7B 02                              mov h3,ax
+[ 405]    06BA: A1 7D 02                              mov ax,h3+2
+[ 406]    06BD: 8B 1E EB 02                           mov bx,d+2
+[ 407]    06C1: 13 C3                                 adc ax,bx
+[ 408]    06C3: A3 7D 02                              mov h3+2,ax       ; h3 = h3+d
+[ 409]        :                                       ;
+[ 410]        :                                       ;;;;;;;;j;;;;;;;;;; j
+[ 411]        :                                       ;hien thi gia tri hex
+[ 412]        :                                       ;lea dx,kq
+[ 413]        :                                       ;mov ah,09h
+[ 414]        :                                       ;int 21h
+[ 415]    06C6: BB 91 02                              mov bx,offset kq
+[ 416]    06C9:                                       lapw2:
+[ 417]        :                                       
+[ 418]        :                                       
+[ 419]    06C9: E4 02                                 in al, USART_CMD
+[ 420]    06CB: A8 01                                 test al, 1
+[ 421]    06CD: 74 FA                                 JE lapw2
+[ 422]    06CF: 8A 07                                 MOV AL,[bx]
+[ 423]    06D1: 83 C3 01                              add bx,1
+[ 424]    06D4: 3C 24                                 cmp al,24h
+[ 425]    06D6: 74 04                                 JE hetw2
+[ 426]    06D8: E6 00                                 OUT USART_DATA,AL
+[ 427]    06DA: EB ED                                 JMP lapw2
+[ 428]    06DC:                                       hetw2:
+[ 429]        :                                       ;;;;;;;;;;;;;;;;;;;;;;;;
+[ 430]        :                                       ; in ket qua duoi dang hexa
+[ 431]    06DC: B1 10                                 mov cl,16       ;divide by
+[ 432]    06DE: B8 00 00                              mov ax, 0
+[ 433]    06E1: BB 00 00                              mov bx,0
+[ 434]    06E4:                                       inkq:
+[ 435]        :                                       
+[ 436]        :                                       
+[ 437]    06E4: 8B 87 6F 02                           mov ax, [h0+bx]
+[ 438]    06E8: B4 00                                 mov ah,0
+[ 439]    06EA: BA 00 00                              mov dx,0    ; puting 0 in the high part of the divided number (DX:AX)
+[ 440]    06ED: F7 F1                                 div cx         ; chia cho 16
+[ 441]        :                                       ;phan du luu o DX
+[ 442]        :                                       ; phan thuong luu o AX
+[ 443]    06EF:                                       againa:
+[ 444]    06EF: 3C 09                                 cmp al,9
+[ 445]    06F1: 77 32                                 ja kytua
+[ 446]    06F3: 3C 09                                 cmp al,9
+[ 447]    06F5: 76 32                                 jna soa
+[ 448]    06F7:                                       againd:
+[ 449]        :                                       
+[ 450]    06F7: 80 FA 09                              cmp dl, 9
+[ 451]    06FA: 77 1F                                 ja kytud     ; neu dx >9 thi chuyen sang ky tu (A-F)
+[ 452]    06FC: 80 FA 09                              cmp dl, 9
+[ 453]    06FF: 76 1F                                 jna sod      ; neu dx < 9 thi doi sang so
+[ 454]    0701:                                       hiena:
+[ 455]        :                                       ;;;;;;;;;;;;;
+[ 456]        :                                       ;mov ah, 2
+[ 457]        :                                       ;int 21h
+[ 458]    0701:                                       w2:
+[ 459]    0701: 8A E0                                 mov ah,al
+[ 460]    0703: E4 02                                 in al, USART_CMD
+[ 461]    0705: A8 01                                 test al, 1
+[ 462]    0707: 74 F8                                 JE w2
+[ 463]    0709: 8A C4                                 MOV AL,ah
+[ 464]    070B: E6 00                                 OUT USART_DATA,al
+[ 465]        :                                       
+[ 466]        :                                       ;;;;;;;;;;;;;;;;;;
+[ 467]        :                                       
+[ 468]    070D: EB E8                                 jmp againd
+[ 469]        :                                       
+[ 470]    070F:                                       hiend:
+[ 471]        :                                       ;;;;;;;;;;;;;;;
+[ 472]        :                                       
+[ 473]        :                                       ;mov ah,2
+[ 474]        :                                       ;int 21h
+[ 475]        :                                       ;mov al,dl
+[ 476]    070F:                                       w3:
+[ 477]    070F: E4 02                                 in al, USART_CMD
+[ 478]    0711: A8 01                                 test al, 1
+[ 479]    0713: 74 FA                                 JE w3
+[ 480]    0715: 8A C2                                 MOV AL,dl
+[ 481]    0717: E6 00                                 OUT USART_DATA,al
+[ 482]        :                                       ;;;;;;;;;;;;;;;
+[ 483]    0719: EB 12                                 jmp thoat
+[ 484]        :                                       
+[ 485]    071B:                                       kytud:
+[ 486]    071B: 80 C2 37                              add dl, 37h
+[ 487]    071E: EB EF                                 jmp hiend
+[ 488]    0720:                                       sod:
+[ 489]    0720: 80 C2 30                              add dl, 30h
+[ 490]    0723: EB EA                                 jmp hiend
+[ 491]    0725:                                       kytua:
+[ 492]    0725: 04 37                                 add al, 37h
+[ 493]    0727: EB D8                                 jmp hiena
+[ 494]    0729:                                       soa:
+[ 495]    0729: 04 30                                 add al, 30h
+[ 496]    072B: EB D4                                 jmp hiena
+[ 497]    072D:                                       thoat:
+[ 498]    072D: 83 C3 01                              add bx,1
+[ 499]    0730: 83 FB 10                              cmp bx,16
+[ 500]    0733: 75 AF                                 jne inkq
+[ 501]        :                                       
+[ 502]    0735: E9 48 FC                              jmp loopmd5
+[ 503]        :                                       
+[ 504]        :                                       MAIN ENDP
+[ 505]        :                                       
+[ 506]        :                                       
+[ 507]        :                                       END start
+[ 508]        :                                       
+[ 509]        :                                       
+ 
+===================================================================================================
+ 
+
+
+
+
+===================================================================================================
